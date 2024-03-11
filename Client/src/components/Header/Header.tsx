@@ -12,14 +12,14 @@ const Header = () => {
 
             <div className='self-center'>
                 <ul className="grid grid-cols-3 col-span-1 self-center">
-                    <li className="justify-self-start sm:justify-self-end font-semibold text-gray-400 hover:text-blue-700">
-                        <NavLink to='/Home' className={({isActive})=> `${isActive&&"text-blue-700"}`}>Home</NavLink>
+                    <li className="justify-self-start sm:justify-self-end pl-3 sm:pl-0 font-semibold text-gray-400 hover:text-blue-700">
+                        <NavLink to='/About' className={({isActive})=> `${isActive&&"text-blue-700"}`}>About</NavLink>
                     </li>
                     <li className="justify-self-start sm:justify-self-center font-semibold  text-gray-400 hover:text-blue-700">
-                        <NavLink to='/Services' className={({isActive})=> `${isActive&&"text-blue-700"} `}>Services</NavLink>
+                        <NavLink to='/Home' className={({isActive})=> `${isActive&&"text-blue-700"} `}>Home</NavLink>
                     </li>
                     <li className="justify-self-start sm:justify-self-start font-semibold  text-gray-400 hover:text-blue-700">
-                        <NavLink to='/Pricing' className={({isActive})=> `${isActive&&"text-blue-700 "}`}>Pricing</NavLink>
+                        <NavLink to='/Services' className={({isActive})=> `${isActive&&"text-blue-700 "}`}>Services</NavLink>
                     </li>
                 </ul>
             </div>
