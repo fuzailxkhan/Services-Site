@@ -1,17 +1,29 @@
 
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import './App.css'
-import Footer from './components/Footer/Footer'
-import Header from './components/Header/Header'
+import About from './components/About'
+import Home from './components/Home'
+import Layout from './components/Layout'
+import Services from './components/Services'
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<Layout/>}>
+      <Route path='' element={<Home/>}/>
+      <Route path='About' element={<About/>}/>
+      <Route path='Services' element={<Services/>}/>
+    </Route>
+  )
+)
 
 function App() {
 
+
   return (
-    <>
-      <Header />
-      <h1 className='underline bg-blue-500'>Fuzail</h1>
-      <Footer />
-    </>
+    <RouterProvider router={router}>
+
+    </RouterProvider>
+  
   )
 }
 
