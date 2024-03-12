@@ -26,10 +26,10 @@ const About = () => {
           <h2 className="text-2xl font-bold mb-2">Our Team</h2>
           <p className="mb-4">Meet the dedicated team behind Our Shipping Company, committed to providing you with the best shipping solutions.</p>
           <ul className="list-disc pl-5">
-            <li className="mb-2">John Doe - CEO</li>
-            <li className="mb-2">Jane Smith - Logistics Manager</li>
-            <li className="mb-2">Mark Johnson - Operations Director</li>
-            <li className="mb-2">Sarah Wilson - Customer Service Manager</li>
+            <li className="mb-2">Sajid Taalpur - CEO</li>
+            <li className="mb-2">Majid Angethi - Logistics Manager</li>
+            <li className="mb-2">Sheikh Jabbar - Operations Director</li>
+            <li className="mb-2">Haq Fareed - Customer Service Manager</li>
           </ul>
           <p>Our team is here to ensure that your shipping experience is smooth, efficient, and meets your expectations. Get in touch with us to learn more about how we can assist you.</p>
         </div>
