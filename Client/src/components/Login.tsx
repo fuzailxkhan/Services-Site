@@ -18,7 +18,7 @@ const Login = () => {
     },[errors.password,errors.email,errors])
   return (
     (
-        <div className={` p-3 pt-10 max-w-[400px] m-auto mx-8 sm:mx-auto mt-10 mb-96 bg-gray-100 rounded-lg shadow-lg`}>
+        <div className="sticky top-[130px] p-3 pt-10 max-w-[400px] m-auto mx-8 sm:mx-auto mt-10 mb-96 bg-gray-100 rounded-lg shadow-lg">
         <form onSubmit={handleSubmit((data)=>{onLogin(data)})} >
           <h1 className="text-center font-semibold text-lg">Login to your Account</h1>
 
