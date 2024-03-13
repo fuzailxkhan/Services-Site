@@ -1,6 +1,21 @@
+import { useRef } from "react";
+
 
 
 const Contact = () => {
+
+    const inputName = useRef<HTMLInputElement>(null);
+    const inputEmail = useRef<HTMLInputElement>(null);
+    const inputMessage = useRef<HTMLTextAreaElement>(null);
+
+    const onSubmit= (e:React.MouseEvent)=>{
+        e.preventDefault();
+        if(inputName.current && inputEmail.current && inputMessage.current)
+        {console.log(inputName.current.value);
+        console.log(inputEmail.current.value);
+        console.log(inputMessage.current.value)}
+    }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Contact Us</h1>
@@ -22,10 +37,10 @@ const Contact = () => {
         <div className="self-center justify-self-center min-w-96">
           <h2 className="text-xl font-bold mb-4">Get in Touch</h2>
           <form className="grid grid-cols-1 gap-4">
-            <input type="text" placeholder="Your Name" className="border border-gray-300 rounded-md py-2 px-3" />
-            <input type="email" placeholder="Your Email" className="border border-gray-300 rounded-md py-2 px-3" />
-            <textarea placeholder="Your Message" rows={4} className="border border-gray-300 rounded-md py-2 px-3"></textarea>
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+            <input ref={inputName} type="text" placeholder="Your Name" className="border border-gray-300 rounded-md py-2 px-3" />
+            <input ref={inputEmail} type="email" placeholder="Your Email" className="border border-gray-300 rounded-md py-2 px-3" />
+            <textarea ref={inputMessage} placeholder="Your Message" maxLength={400} rows={4} className="border border-gray-300 rounded-md py-2 px-3"></textarea>
+            <button type="submit" onClick={(e)=>onSubmit(e)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
           </form>
         </div>
       </div>
