@@ -1,20 +1,15 @@
-import { useRef } from "react";
+
+import { FieldValues, useForm } from "react-hook-form";
 
 
 
 const Contact = () => {
 
-    const inputName = useRef<HTMLInputElement>(null);
-    const inputEmail = useRef<HTMLInputElement>(null);
-    const inputMessage = useRef<HTMLTextAreaElement>(null);
+    const {register ,handleSubmit,formState:{errors}} = useForm();
 
-    const onSubmit= (e:React.MouseEvent)=>{
-        e.preventDefault();
-        if(inputName.current && inputEmail.current && inputMessage.current)
-        {console.log(inputName.current.value);
-        console.log(inputEmail.current.value);
-        console.log(inputMessage.current.value)}
-    }
+    const onSubmit= (data:FieldValues)=>{
+      console.log(data)
+    } 
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -27,7 +22,7 @@ const Contact = () => {
             <p className="mb-2">Karachi, Pakistan</p>
             <p className="mb-2">Postal: 74900</p>
             <p className="mb-4">Phone: 0312 4209211</p>
-            <p className="mb-4">Email: wwslimited@gmail.com</p>
+            <p className="mb-4">Email: WWSlimited@gmail.com</p>
             
           </div>
           <div className="flex flex-col col-span-2">
@@ -37,10 +32,13 @@ const Contact = () => {
         <div className="self-center justify-self-center min-w-96">
           <h2 className="text-xl font-bold mb-4">Get in Touch</h2>
           <form className="grid grid-cols-1 gap-4">
-            <input ref={inputName} type="text" placeholder="Your Name" className="border border-gray-300 rounded-md py-2 px-3" />
-            <input ref={inputEmail} type="email" placeholder="Your Email" className="border border-gray-300 rounded-md py-2 px-3" />
-            <textarea ref={inputMessage} placeholder="Your Message" maxLength={400} rows={4} className="border border-gray-300 rounded-md py-2 px-3"></textarea>
-            <button type="submit" onClick={(e)=>onSubmit(e)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+            <input {...register("contactName", {required:"Please enter your name.",maxLength:25,minLength:2})} type="text" placeholder="Your Name" className="border border-gray-300 rounded-md py-2 px-3" />
+            {errors.contactName && <p className="text-red-500">{errors.contactName.message}</p>}
+            <input {...register("contactEmail",{required:"Please enter your email.",pattern: {value: /\S+@\S+\.\S+/,message: "Enter a valid email."}})} type="email" placeholder="Your Email" className="border border-gray-300 rounded-md py-2 px-3" />
+            {errors.contactEmail && <p className="text-red-500">{errors.contactEmail.message}</p>}
+            <textarea {...register("contactMessage",{required:{value:true,message:"Please enter your message"},maxLength:{value:250,message:"Message should be between 50-250 alphabets."},minLength:{value:50,message:"Message should be between 50-250 alphabets."}})} placeholder="Your Message" rows={4} className="border border-gray-300 rounded-md py-2 px-3"></textarea>
+            {errors.contactMessage && <p className="text-red-500">{errors.contactMessage.message}</p>}
+            <button type="submit" onClick={handleSubmit(onSubmit)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
           </form>
         </div>
       </div>
