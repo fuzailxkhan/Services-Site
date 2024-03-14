@@ -3,21 +3,53 @@ import { MdAlternateEmail } from "react-icons/md";
 import { IoKeySharp } from "react-icons/io5";
 import { GoPerson } from "react-icons/go";
 import noUser from "../assets/no-user.png"
-import { useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 
 const SignUp = () => {
 
-  const [picture,setPicture] = useState();
+  const [picture,setPicture] = useState<string>();
+  const [pictureError,setPictureError] = useState<string>();
+  
 
-  const {register,handleSubmit,formState:{errors}} = useForm();
+  const {register,handleSubmit,setValue,reset,formState:{errors}} = useForm();
   const onSignUp = (data:FieldValues)=>{
+    if(!picture)setPictureError("Please upload an image");
+    else{
     console.log(data);
+    reset();
+    setPicture('');
+    }
   }
 
-  useEffect(()=>{
+  const handleImageChange =(e:ChangeEvent<HTMLInputElement>)=>{
+    console.log("File Uploaded")
+
+
+    let file;
     
-  })
+    if (e.target.files) {
+      file = e.target.files[0];
+      if(file&& file.size <= 5 * 1024 * 1024){
+        console.log("File Size okay")
+        const reader = new FileReader();
+        reader.onload = () => {
+          if(reader.result){
+          setPicture(reader.result.toString());
+          setValue('picture',reader.result.toString());}
+           };
+        reader.readAsDataURL(file);
+        setPictureError(''); 
+      }
+      else{
+        setPictureError("Image should be under 5MB.")
+      }
+    }else{
+      setPictureError("Please upload an image.")
+    }
+  }
+
+  
 
   return (
 
@@ -30,10 +62,11 @@ const SignUp = () => {
           <p className="self-center font-medium text-gray-900 mb-1">Add a picture</p>
           <label htmlFor="file-upload" className="self-center">
             <div className="border-4 border-gray-400 rounded-full overflow-hidden">
-              <img src={noUser} className="max-h-[150px] bg-gray-200 m-auto"/>
+              <img src={picture?picture:noUser} className="h-[150px] w-[150px] object-cover bg-gray-200 m-auto"/>
             </div>
           </label>
-          <input id="file-upload" type="file" accept="image/*" {...register('file', { required: true })} className="hidden" />
+          {pictureError&&<p className="text-center text-red-500">{pictureError}</p>}
+          <input onChange={handleImageChange}  id="file-upload" type="file" accept="image/*"  className="hidden" />
           
         </div>
 
