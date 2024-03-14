@@ -10,24 +10,20 @@ const SignUp = () => {
 
   const [picture,setPicture] = useState<string>();
   const [pictureError,setPictureError] = useState<string>();
-  
-
   const {register,handleSubmit,setValue,reset,formState:{errors}} = useForm();
+
   const onSignUp = (data:FieldValues)=>{
     if(!picture)setPictureError("Please upload an image");
     else{
     console.log(data);
     reset();
     setPicture('');
+    setPictureError('');
     }
   }
 
   const handleImageChange =(e:ChangeEvent<HTMLInputElement>)=>{
-    console.log("File Uploaded")
-
-
     let file;
-    
     if (e.target.files) {
       file = e.target.files[0];
       if(file&& file.size <= 5 * 1024 * 1024){
