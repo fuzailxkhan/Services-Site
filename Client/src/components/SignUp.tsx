@@ -4,7 +4,7 @@ import { IoKeySharp } from "react-icons/io5";
 import { GoPerson } from "react-icons/go";
 import noUser from "../assets/no-user.png"
 import { ChangeEvent, useState } from "react";
-
+import axios from "axios";
 
 const SignUp = () => {
 
@@ -19,6 +19,8 @@ const SignUp = () => {
     reset();
     setPicture('');
     setPictureError('');
+    
+    axios.post("http://localhost:3000/login",data)
     }
   }
 
@@ -45,6 +47,9 @@ const SignUp = () => {
     }
   }
 
+  const closeButton =()=>{
+    axios.post("http://localhost:3000/login",{Message:"Hello"})
+  }
   
 
   return (
@@ -57,7 +62,7 @@ const SignUp = () => {
         <div className="flex flex-col justify-center m-3 mb-1">
           <p className="self-center font-medium text-gray-900 mb-1">Add a picture</p>
           <label htmlFor="file-upload" className="self-center">
-            <div className="border-4 border-gray-400 rounded-full overflow-hidden">
+            <div className={`${pictureError&&"border-red-500"} border-4 border-gray-400 rounded-full overflow-hidden`}>
               <img src={picture?picture:noUser} className="h-[150px] w-[150px] object-cover bg-gray-200 m-auto"/>
             </div>
           </label>
@@ -109,7 +114,7 @@ const SignUp = () => {
 
           <div className=" m-3 mt-5 flex flex-row-reverse gap-1">
             <button type="submit" className="bg-blue-500 text-white ps-4 pe-4 p-1.5 rounded-md shadow-md shadow-gray-400  hover:bg-blue-600 ms-2" data-bs-dismiss="modal">Sign Up</button>
-            <button type="button" className="bg-gray-200 text-gray-600 ps-4 pe-4 p-1.5 rounded-md shadow-md shadow-gray-400  hover:bg-blue-600" data-bs-dismiss="modal">Close</button>
+            <button type="button" onClick={()=>closeButton()} className="bg-gray-200 text-gray-600 ps-4 pe-4 p-1.5 rounded-md shadow-md shadow-gray-400  hover:bg-blue-600" data-bs-dismiss="modal">Close</button>
           </div>
 
       </form>
