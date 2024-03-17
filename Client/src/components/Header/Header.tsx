@@ -17,10 +17,10 @@ const Header = () => {
             </div>
 
             <div className="self-center relative block sm:hidden">
-                <button onClick={()=>setMenuOpen(!menuOpen)} className=' rounded-md shadow-md shadow-gray-400 bg-blue-500 text-white p-1.5'>
-                    <HiOutlineMenuAlt1 size={22}/>
+                <button onClick={()=>setMenuOpen(!menuOpen)} className=' rounded-md   text-white p-1.5'>
+                    <HiOutlineMenuAlt1 size={22} className='fill stroke-blue-500 '/>
                 </button>
-                <div className={`border  m-2 p-2.5  w-full transition-all duration-300 fixed top-0  ${menuOpen? "left-[-8px]":"left-[-437px]"} bg-white`}>
+                <div className={`shadow-md  m-2 p-3 w-full transition-all duration-300 fixed top-0  ${menuOpen? "left-[-8px]":"left-[-437px]"} bg-white`}>
                         <ul className='grid grid-cols-4'>
                             <li className=' text-center m-1'>
                             <NavLink to='/About' onClick={()=>{setMenuOpen(false)}} className={({isActive})=> `${isActive&&"text-blue-700"}`}>About</NavLink>
