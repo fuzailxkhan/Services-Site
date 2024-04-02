@@ -5,6 +5,7 @@ import { GoPerson } from "react-icons/go";
 import noUser from "../assets/no-user.png"
 import { ChangeEvent, useState } from "react";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 const SignUp = () => {
 
@@ -20,7 +21,7 @@ const SignUp = () => {
     setPicture('');
     setPictureError('');
     
-    axios.post("http://localhost:3000/login",data)
+    axios.post("http://localhost:3000/Signup",data)
     }
   }
 
@@ -48,7 +49,7 @@ const SignUp = () => {
   }
 
   const closeButton =()=>{
-    axios.post("http://localhost:3000/login",{Message:"Hello"})
+    // axios.post("http://localhost:3000/SignUp",{Message:"Hello"})
   }
   
 
@@ -114,7 +115,7 @@ const SignUp = () => {
 
           <div className=" m-3 mt-5 flex flex-row-reverse gap-1">
             <button type="submit" className="bg-blue-500 text-white ps-4 pe-4 p-1.5 rounded-md shadow-md shadow-gray-400  hover:bg-blue-600 ms-2" data-bs-dismiss="modal">Sign Up</button>
-            <button type="button" onClick={()=>closeButton()} className="bg-gray-200 text-gray-600 ps-4 pe-4 p-1.5 rounded-md shadow-md shadow-gray-400  hover:bg-blue-600" data-bs-dismiss="modal">Close</button>
+            <NavLink to='/'><button type="button" onClick={()=>closeButton()} className="bg-gray-200 text-gray-600 ps-4 pe-4 p-1.5 rounded-md shadow-md shadow-gray-400  hover:bg-blue-600" data-bs-dismiss="modal">Close</button></NavLink>
           </div>
 
       </form>
