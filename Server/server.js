@@ -12,7 +12,7 @@ app.listen(3000,(err)=>{
     console.log("Server Running at Port 3000")
 })
 
-app.post('/login',(req,res)=>{
+app.post('/SignUp',(req,res)=>{
     
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
