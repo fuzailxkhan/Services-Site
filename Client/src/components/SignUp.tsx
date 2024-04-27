@@ -22,6 +22,7 @@ const SignUp = () => {
     setPictureError('');
     
     axios.post("http://localhost:3000/Signup",data)
+    .then(res=>console.log(res))
     }
   }
 
