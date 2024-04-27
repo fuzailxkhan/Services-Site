@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs')
+const cloudinary = require('cloudinary').v2;
 
 const app = express();
 app.use(express.json({ limit: '6mb' }));
@@ -11,8 +12,14 @@ app.listen(3000,(err)=>{
     if(err) throw err;
     console.log("Server Running at Port 3000")
 })
+          
+cloudinary.config({ 
+  cloud_name: 'dtclwtjyp', 
+  api_key: '283138351422626', 
+  api_secret: '9nTu4HMZRoE7psw2hDCy76dmpkA' 
+});
 
-app.post('/SignUp',(req,res)=>{
+app.post('/SignUp',async (req,res)=>{
     
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -28,9 +35,11 @@ app.post('/SignUp',(req,res)=>{
 
     const imageType = matches[1];
     const base64Data = matches[2];
-    const buffer = Buffer.from(base64Data, 'base64');
-    fs.writeFileSync(`image.${imageType}`, buffer);
 
-    res.send("Hello")
+    const result = await cloudinary.uploader.upload(`data:image/${imageType};base64,${base64Data}`);
+
+    const imageUrl = result.secure_url;
+    console.log(imageUrl)
+    res.send(imageUrl)
     
 })
