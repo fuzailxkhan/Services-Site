@@ -6,12 +6,15 @@ import noUser from "../assets/no-user.png"
 import { ChangeEvent, useState } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setNoti } from "../app/appSlice";
 
 const SignUp = () => {
 
   const [picture,setPicture] = useState<string>();
   const [pictureError,setPictureError] = useState<string>();
   const {register,handleSubmit,setValue,reset,formState:{errors}} = useForm();
+  const dispatch = useDispatch();
 
   const onSignUp = (data:FieldValues)=>{
     if(!picture)setPictureError("Please upload an image");
@@ -21,8 +24,12 @@ const SignUp = () => {
     setPicture('');
     setPictureError('');
     
+
     axios.post("http://localhost:3000/Signup",data)
-    .then(res=>console.log(res))
+    .then(res=>{console.log(res.data.Message);
+      dispatch(setNoti(res.data.Message));
+      setTimeout(()=>dispatch(setNoti('')),3000)
+    })
     }
   }
 

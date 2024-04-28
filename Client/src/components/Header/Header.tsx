@@ -2,15 +2,26 @@ import { useState } from 'react';
 import shipLogo from './navbar_logo.jpg';
 import {Link,NavLink} from "react-router-dom"
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
-
+import { useDispatch } from 'react-redux';
+import { setNoti } from '../../app/appSlice';
+import { useSelector } from 'react-redux';
+import { WritableDraft } from 'immer'; 
 
 const Header = () => {
     const [menuOpen,setMenuOpen] = useState(false);
+    const dispatch= useDispatch();
+    const noti = useSelector((state: WritableDraft<{noti: string;}>)=>state.noti)
+
+    const notiFunction = async(message:string)=>{
+        dispatch(setNoti(message));
+        setTimeout(()=>dispatch(setNoti('')),3000);
+    }
     
     
   return ( 
     <div>
-        <nav className="min-h-10 grid grid-cols-3 p-2 m-2 rounded-lg sm:grid-cols-3 shadow-xl border mb-2">
+        <div className={`bg-gray-200 shadow-lg sm:w-[300px] w-[225px] p-[2px]  text-center rounded-lg fixed top-[-25px] left-0 right-0 mx-auto tranisiton-all duration-300 ${noti&&'top-[22px]'}`}><span>{noti}</span></div>
+        <nav className="min-h-10 grid grid-cols-3 p-2 m-2 rounded-md sm:grid-cols-3 shadow-xl border mb-2">
 
             <div className="col-span-1 justify-self-center  self-center hidden sm:block">
                 <Link to="/" className='flex'><img className="max-h-10 m-0" src={shipLogo} /><p className='self-center ms-5 font-semibold text-blue-900 hover:text-black'>World Wide Shipping</p></Link>
@@ -68,6 +79,8 @@ const Header = () => {
             </div>
             
         </nav>
+        
+      <button onClick={()=>notiFunction("Welcome Fuzail Khan")}>Click Me</button>
     </div>
   )
 }
