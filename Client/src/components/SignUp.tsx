@@ -8,11 +8,14 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setNoti } from "../app/appSlice";
+import "./SignUp.css"
+import ship from "./Cruise Ship.svg";
 
 const SignUp = () => {
 
   const [picture,setPicture] = useState<string>();
   const [pictureError,setPictureError] = useState<string>();
+  const [loading,setLoading] = useState(false);
   const {register,handleSubmit,setValue,reset,formState:{errors}} = useForm();
   const dispatch = useDispatch();
 
@@ -24,11 +27,11 @@ const SignUp = () => {
     setPicture('');
     setPictureError('');
     
-
+    setLoading(true);
     axios.post("http://localhost:3000/Signup",data)
     .then(res=>{console.log(res.data.Message);
       dispatch(setNoti(res.data.Message));
-      setTimeout(()=>dispatch(setNoti('')),3000)
+      setTimeout(()=>dispatch(setNoti('')),3000);
     })
     }
   }
@@ -63,8 +66,8 @@ const SignUp = () => {
 
   return (
 
-    <div className="sticky top-[130px] pt-10 pb-10 max-w-[420px] m-auto mx-8 sm:mx-auto mt-10 mb-96 bg-gray-100 rounded-lg shadow-lg">
-      <form onSubmit={handleSubmit((data)=>{onSignUp(data)})} >
+    <div className="relative border top-[130px] pt-10 pb-10 max-w-[420px] m-auto mx-8 sm:mx-auto mt-10 mb-96 bg-gray-100 rounded-lg shadow-lg">
+      <form onSubmit={handleSubmit((data)=>{onSignUp(data)})} className="blur-sm" >
 
         <h1 className="text-center font-semibold text-lg mb-5">Create an Account</h1>
 
@@ -127,7 +130,11 @@ const SignUp = () => {
           </div>
 
       </form>
-    </div>
+      {<div className="absolute top-[250px] right-0 left-0">
+        <img className="w-[100px] m-auto Ship" src={ship}></img>
+      </div>}
+        
+      </div>
 
   )
 }
