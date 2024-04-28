@@ -8,6 +8,7 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setNoti } from "../app/appSlice";
+import { useNavigate } from "react-router-dom";
 import "./SignUp.css"
 import ship from "./Cruise Ship.svg";
 
@@ -18,6 +19,7 @@ const SignUp = () => {
   const [loading,setLoading] = useState(false);
   const {register,handleSubmit,setValue,reset,formState:{errors}} = useForm();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSignUp = (data:FieldValues)=>{
     if(!picture)setPictureError("Please upload an image");
@@ -32,6 +34,20 @@ const SignUp = () => {
     .then(res=>{console.log(res.data.Message);
       dispatch(setNoti(res.data.Message));
       setTimeout(()=>dispatch(setNoti('')),3000);
+      setLoading(false);
+      if(res.data.Message.startsWith('Welcome')){
+        navigate("/");
+      }
+      else if(res.data.Message==="Email already in use"){
+          setPicture(picture);
+          setValue('firstName', data.firstName);
+          setValue('lastName', data.lastName);
+          setValue('email', data.email);
+          setValue('password', data.password);
+      }
+      else{
+        console.log('Some New Error Occures')
+      }
     })
     }
   }
@@ -67,7 +83,7 @@ const SignUp = () => {
   return (
 
     <div className="relative border top-[130px] pt-10 pb-10 max-w-[420px] m-auto mx-8 sm:mx-auto mt-10 mb-96 bg-gray-100 rounded-lg shadow-lg">
-      <form onSubmit={handleSubmit((data)=>{onSignUp(data)})} className="blur-sm" >
+      <form onSubmit={handleSubmit((data)=>{onSignUp(data)})} className={`${loading&&'blur-sm'}`} >
 
         <h1 className="text-center font-semibold text-lg mb-5">Create an Account</h1>
 
@@ -130,7 +146,7 @@ const SignUp = () => {
           </div>
 
       </form>
-      {<div className="absolute top-[250px] right-0 left-0">
+      {loading&&<div className="absolute top-[250px] right-0 left-0">
         <img className="w-[100px] m-auto Ship" src={ship}></img>
       </div>}
         
