@@ -32,8 +32,6 @@ const emailFind = async (email)=>{
 
 app.post('/SignUp',async (req,res)=>{
 
-
-    
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
@@ -59,7 +57,7 @@ app.post('/SignUp',async (req,res)=>{
 
     const newUser = userSchema({fname:firstName,lname:lastName,email:email,password:pass,pfp:imageUrl})
     const savedUser = await newUser.save();
-    res.status(200).json({"Message":"New Account Created on "+newUser.email});
+    res.status(200).json({"Message":"Welcome "+newUser.fname});
     
     
 })
