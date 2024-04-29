@@ -82,7 +82,7 @@ const SignUp = () => {
 
   return (
 
-    <div className="relative border top-[130px] pt-10 pb-10 max-w-[420px] m-auto mx-8 sm:mx-auto mt-10 mb-96 bg-gray-100 rounded-lg shadow-lg">
+    <div className="sticky border top-[130px] pt-10 pb-10 max-w-[420px] m-auto mx-8 sm:mx-auto mt-10 mb-96 bg-gray-100 rounded-lg shadow-lg">
       <form onSubmit={handleSubmit((data)=>{onSignUp(data)})} className={`${loading&&'blur-sm'}`} >
 
         <h1 className="text-center font-semibold text-lg mb-5">Create an Account</h1>

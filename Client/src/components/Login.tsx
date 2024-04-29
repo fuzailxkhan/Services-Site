@@ -1,25 +1,53 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { MdAlternateEmail } from "react-icons/md";
 import { IoKeySharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {  useEffect, useState } from "react";
+import axios from "axios";
+import useNotification from "../functions/functions";
+import ship from "./Cruise Ship.svg";
+import "./Login.css"
 
 const Login = () => {
+    const {setNotification} = useNotification();
+    const [loading,setLoading] = useState(false);
+    const navigate = useNavigate();
+    const {register,setValue,handleSubmit,formState:{errors}} = useForm();
 
-    const {register,handleSubmit,formState:{errors}} = useForm();
     const onLogin = (data:FieldValues)=>{
         console.log(data);
-        console.log(errors)
+        setLoading(true);
+        axios.post("http://localhost:3000/Login",data)
+        .then((res):void=>{
+          console.log(res.data);
+          setNotification(res.data.Message);
+          setLoading(false);
+          if(res.data.Message.startsWith('Welcome')){
+            navigate("/");
+          }
+          else if(res.data.Message==="Wrong Password"){
+              
+              
+              setValue('email', data.email);
+              setValue('password', data.password);
+          }
+          else{
+            console.log('Some New Error Occures')
+          }
+        })
     }
 
     useEffect(()=>{
-      console.log(errors);
-      console.log(errors.email?.type )
+      
     },[errors.password,errors.email,errors])
+
+    
+
+
   return (
     (
         <div className="sticky top-[130px] p-3 pt-10 max-w-[400px] m-auto mx-8 sm:mx-auto mt-10 mb-96 bg-gray-100 rounded-lg shadow-lg">
-        <form onSubmit={handleSubmit((data)=>{onLogin(data)})} >
+        <form onSubmit={handleSubmit((data)=>{onLogin(data)})} className={`${loading&&'blur-sm'}`}>
           <h1 className="text-center font-semibold text-lg">Login to your Account</h1>
 
           <div className=" flex flex-col m-3">
@@ -57,6 +85,10 @@ const Login = () => {
           </div>
 
         </form>
+        {loading&&<div className="absolute top-[150px] right-0 left-0">
+        <img className="w-[100px] m-auto " src={ship}></img>
+        <p className="text-center text-bold logging">Logging In</p>
+      </div>}
     </div>
   ))
 }
