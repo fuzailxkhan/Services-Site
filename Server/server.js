@@ -30,6 +30,10 @@ const emailFind = async (email)=>{
     return user
 }
 
+const passwordChecker = async(pass,encpass)=>{
+    return await bcrypt.compare(pass,encpass);
+}
+
 app.post('/SignUp',async (req,res)=>{
 
     const firstName = req.body.firstName;
@@ -40,9 +44,9 @@ app.post('/SignUp',async (req,res)=>{
     const pic = req.body.picture;
 
     const user = await emailFind(email);
-    if(user){return res.json({"Message":"User already exists"})}
+    if(user){return res.json({"Message":"Email already in use"})}
     console.log('email not found')
-    const matches = pic.match(/^data:image\/([A-Za-z-+\/]+);base64,(.+)$/);
+    const matches = await pic.match(/^data:image\/([A-Za-z-+\/]+);base64,(.+)$/);
     if (!matches) {
         throw new Error('Invalid base64 image string');
     }
@@ -60,4 +64,25 @@ app.post('/SignUp',async (req,res)=>{
     res.status(200).json({"Message":"Welcome "+newUser.fname});
     
     
+})
+
+app.post('/Login',async(req,res)=>{
+    console.log(req.body.email,req.body.password);
+    const foundUser = await emailFind(req.body.email);
+
+    if(!foundUser){
+        console.log("NO such User Found")
+        return res.send({"Message":"User not found"})
+    }
+    else if(await passwordChecker(req.body.password,foundUser.password)){
+        console.log("User Found")
+        return res.send({"Message":"Welcome "+foundUser.fname})
+    }
+    else{
+        console.log("Wrong Password")
+        return res.send({"Message":"Wrong Password"})
+    }
+
+    console.log(foundUser);
+    res.send("Data Recieved");
 })
