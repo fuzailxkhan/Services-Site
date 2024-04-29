@@ -6,11 +6,10 @@ import noUser from "../assets/no-user.png"
 import { ChangeEvent, useState } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setNoti } from "../app/appSlice";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.css"
 import ship from "./Cruise Ship.svg";
+import {useNotification} from "../functions/functions";
 
 const SignUp = () => {
 
@@ -18,8 +17,9 @@ const SignUp = () => {
   const [pictureError,setPictureError] = useState<string>();
   const [loading,setLoading] = useState(false);
   const {register,handleSubmit,setValue,reset,formState:{errors}} = useForm();
-  const dispatch = useDispatch();
+  
   const navigate = useNavigate();
+  const {setNotification} = useNotification();
 
   const onSignUp = (data:FieldValues)=>{
     if(!picture)setPictureError("Please upload an image");
@@ -31,9 +31,9 @@ const SignUp = () => {
     
     setLoading(true);
     axios.post("http://localhost:3000/Signup",data)
-    .then(res=>{console.log(res.data.Message);
-      dispatch(setNoti(res.data.Message));
-      setTimeout(()=>dispatch(setNoti('')),3000);
+    .then((res):void=>{console.log(res.data.Message);
+      setNotification(res.data.Message)
+      
       setLoading(false);
       if(res.data.Message.startsWith('Welcome')){
         navigate("/");

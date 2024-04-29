@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { setNoti } from "../app/appSlice";
 
-const useNotification = () => {
+export const useNotification = () => {
     const dispatch = useDispatch();
 
     const setNotification = (noti:string) => {
@@ -14,4 +14,4 @@ const useNotification = () => {
     return { setNotification };
 };
 
-export default useNotification;
+

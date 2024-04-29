@@ -4,7 +4,7 @@ import { IoKeySharp } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import {  useEffect, useState } from "react";
 import axios from "axios";
-import useNotification from "../functions/functions";
+import {useNotification} from "../functions/functions";
 import ship from "./Cruise Ship.svg";
 import "./Login.css"
 
